@@ -1,0 +1,18 @@
+POST http://localhost:8090/api/auth/login
+Content-Type: application/json
+Accept-Language: uz
+
+{
+  "firstName":"Sirojiddin",
+  "lastName":"Saidov",
+  "tin":"123456788",
+  "login":"1234567899",
+  "companyName":"ECMA",
+  "phoneNumber":"+998996791137",
+  "email":"sirojiddiecma2@gmail.com",
+  "fax":"8989",
+  "personTypeId":"2"
+}
+
+###
+
