@@ -1,4 +1,4 @@
-package ai.ecma.appapplicationindividual.entity.enums;
+package ai.ecma.organization.entity.enums;
 
 /**
  * BY SIROJIDDIN on 23.11.2020

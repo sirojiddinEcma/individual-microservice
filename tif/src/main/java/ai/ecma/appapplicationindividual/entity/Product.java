@@ -27,8 +27,11 @@ public class Product extends AbsEntity {
     @Column(length = 10)
     private String code;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private Measurement measurement;
+    @Column(nullable = false)
+    private Integer measurementId;
 
     private Double amount;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Application application;
 }

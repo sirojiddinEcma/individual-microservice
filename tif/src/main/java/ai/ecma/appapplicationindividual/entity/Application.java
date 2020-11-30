@@ -30,7 +30,7 @@ public class Application extends AbsEntity {
     @Column(nullable = false)
     private UUID organizationId;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "application")
     private List<Product> products;
 
     @OneToMany(cascade = CascadeType.ALL)

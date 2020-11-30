@@ -10,6 +10,7 @@ import ai.ecma.appapplicationindividual.payload.LoginDto;
 import ai.ecma.appapplicationindividual.payload.UserDto;
 import ai.ecma.appapplicationindividual.repository.PersonTypeRepository;
 import ai.ecma.appapplicationindividual.repository.UserRepository;
+import ai.ecma.appapplicationindividual.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,6 +39,8 @@ public class AuthService implements UserDetailsService {
     PasswordEncoder passwordEncoder;
     @Autowired
     AuthenticationManager authenticationManager;
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
 
 
     public ApiResponse registerUser(UserDto userDto) {
@@ -69,12 +72,30 @@ public class AuthService implements UserDetailsService {
 
     public ApiResponse login(LoginDto loginDto) {
         try {
-            Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    loginDto.getLogin(),
-                    loginDto.getLogin()
-            ));
-            System.out.println(authenticate.getPrincipal());
-            return new ApiResponse(messageByLang.getMessageByKey("ok"), true, "Tokenni berasiz shu yerda");
+
+            Authentication authenticate =
+                    authenticationManager.authenticate(
+                            new UsernamePasswordAuthenticationToken(
+                                    loginDto.getLogin(),
+                                    loginDto.getLogin()
+                            ));
+//            UserDetails userDetails = loadUserByUsername(loginDto.getLogin());
+//            if (
+//                    passwordEncoder.matches(loginDto.getLogin(), userDetails.getPassword())
+//                            && userDetails.isAccountNonExpired()
+//                            && userDetails.isAccountNonLocked()
+//                            && userDetails.isCredentialsNonExpired()
+//                            && userDetails.isEnabled()
+//            )
+            return new ApiResponse(
+                    messageByLang.getMessageByKey("ok"),
+                    true,
+                    jwtTokenProvider.generateToken((User) authenticate.getPrincipal())
+            );
+//            else
+//                return new ApiResponse(
+//                        messageByLang.getMessageByKey("password.or.login.error"),
+//                        false);
         } catch (Exception e) {
             return new ApiResponse(messageByLang.getMessageByKey("password.or.login.error"), false);
         }

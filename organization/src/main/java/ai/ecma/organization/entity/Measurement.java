@@ -1,6 +1,6 @@
-package ai.ecma.appapplicationindividual.entity;
+package ai.ecma.organization.entity;
 
-import ai.ecma.appapplicationindividual.entity.template.AbsNameEntity;
+import ai.ecma.organization.entity.template.AbsNameEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
