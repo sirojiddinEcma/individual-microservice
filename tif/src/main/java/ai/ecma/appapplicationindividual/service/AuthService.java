@@ -3,12 +3,10 @@ package ai.ecma.appapplicationindividual.service;
 import ai.ecma.appapplicationindividual.component.MessageByLang;
 import ai.ecma.appapplicationindividual.entity.User;
 import ai.ecma.appapplicationindividual.entity.enums.RoleName;
-import ai.ecma.appapplicationindividual.exception.ResourceNotFoundException;
 import ai.ecma.appapplicationindividual.exception.UserNotFoundException;
 import ai.ecma.appapplicationindividual.payload.ApiResponse;
 import ai.ecma.appapplicationindividual.payload.LoginDto;
 import ai.ecma.appapplicationindividual.payload.UserDto;
-import ai.ecma.appapplicationindividual.repository.PersonTypeRepository;
 import ai.ecma.appapplicationindividual.repository.UserRepository;
 import ai.ecma.appapplicationindividual.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +29,6 @@ public class AuthService implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    PersonTypeRepository personTypeRepository;
     @Autowired
     MessageByLang messageByLang;
     @Autowired
@@ -58,9 +54,9 @@ public class AuthService implements UserDetailsService {
                 userDto.getPhoneNumber(),
                 userDto.getEmail(),
                 userDto.getFax(),
-                personTypeRepository.findById(userDto.getPersonTypeId()).orElseThrow(() -> new ResourceNotFoundException("personType", "id", userDto.getPersonTypeId())),
                 RoleName.ROLE_USER,
-                passwordEncoder.encode(userDto.getKeySerialNumber())
+                passwordEncoder.encode(userDto.getKeySerialNumber()),
+                userDto.getPersonTypeId()
 
         );
         userRepository.save(user);

@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -49,27 +49,23 @@ public class User extends AbsEntity implements UserDetails {
 
     private String fax;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private PersonType personType;
-
     private boolean accountNonExpired = true;
     private boolean accountNonLocked = true;
     private boolean credentialsNonExpired = true;
     private boolean enabled = true;
 
+    @Enumerated(EnumType.STRING)
     private RoleName role;
 
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private Integer personTypeId;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority grantedAuthority = new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return role.name();
-            }
-        };
+        GrantedAuthority grantedAuthority = (GrantedAuthority) () -> role.name();
         return Collections.singleton(grantedAuthority);
     }
 
@@ -103,7 +99,7 @@ public class User extends AbsEntity implements UserDetails {
         return enabled;
     }
 
-    public User(String firstName, String lastName, String tin, String keySerialNumber, String companyName, String phoneNumber, String email, String fax, PersonType personType, RoleName role, String password) {
+    public User(String firstName, String lastName, String tin, String keySerialNumber, String companyName, String phoneNumber, String email, String fax, RoleName role, String password, Integer personTypeId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.tin = tin;
@@ -112,8 +108,8 @@ public class User extends AbsEntity implements UserDetails {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.fax = fax;
-        this.personType = personType;
         this.role = role;
         this.password = password;
+        this.personTypeId = personTypeId;
     }
 }

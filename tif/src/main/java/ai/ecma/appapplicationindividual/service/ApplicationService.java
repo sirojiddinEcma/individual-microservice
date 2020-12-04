@@ -10,6 +10,7 @@ import ai.ecma.appapplicationindividual.payload.ProductDto;
 import ai.ecma.appapplicationindividual.repository.ApplicationRepository;
 import ai.ecma.appapplicationindividual.repository.AttachmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +42,7 @@ public class ApplicationService {
             Application application = new Application();
             application.setClient(client);
             application.setNumber(generateNumberApp(client.getTin()));
-            application.setOrganizationId(application.getOrganizationId());
+            application.setOrganizationId(applicationDto.getOrganizationId());
             application.setProducts(makeProductList(applicationDto.getProductDtoList(), application));
             application.setAttachments(attachmentRepository.findAllById(applicationDto.getAttachmentIds()));
             applicationRepository.save(application);
@@ -77,5 +78,9 @@ public class ApplicationService {
                 application
 
         );
+    }
+
+    public ApiResponse getApplications(int page, int size, UserDetails user) {
+        return new ApiResponse("Javob keldi tif dan", true, "Qalyay ekan object?");
     }
 }

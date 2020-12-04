@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ApplicationDto {
 
-    private UUID organizationId;
+    private Integer organizationId;
 
     private List<ProductDto> productDtoList;
 

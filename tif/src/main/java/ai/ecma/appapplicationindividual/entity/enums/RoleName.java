@@ -6,5 +6,7 @@ package ai.ecma.appapplicationindividual.entity.enums;
 
 
 public enum RoleName {
-    ROLE_USER//foydalanuvchi
+    ROLE_USER,//foydalanuvchi
+    ROLE_ORGANIZATION,//TASHKILOT XODIMLARI
+    ROLE_ADMIN
 }

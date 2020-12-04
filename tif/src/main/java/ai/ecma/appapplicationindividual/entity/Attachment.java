@@ -30,4 +30,10 @@ public class Attachment extends AbsEntity {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private AttachmentContent attachmentContent;
+
+    public Attachment(String name, String contentType, long size) {
+        this.name = name;
+        this.contentType = contentType;
+        this.size = size;
+    }
 }

@@ -1,0 +1,24 @@
+GET http://localhost:8090/api/application
+Content-Type: application/json
+
+{
+  "nameUz":"KG",
+  "nameRu":"KG",
+  "tin":"123456788",
+  "address":"Beruniy",
+  "accountNumber":"123456788"
+}
+
+###
+POST http://localhost:8080/api/organization
+Accept: application/json
+
+{
+"nameUz":"UzStandart",
+"nameRu":"UzStandart",
+"tin":"123456789",
+"address":"Beruniy",
+"accountNumber":"123456789",
+}
+
+###

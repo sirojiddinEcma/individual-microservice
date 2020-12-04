@@ -1,10 +1,13 @@
 package ai.ecma.appapplicationindividual.security;
 
+import ai.ecma.appapplicationindividual.entity.Organization;
 import ai.ecma.appapplicationindividual.entity.User;
+import ai.ecma.appapplicationindividual.repository.OrganizationRepository;
 import ai.ecma.appapplicationindividual.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -29,6 +32,8 @@ public class JwtFilter extends OncePerRequestFilter {
     UserRepository userRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    OrganizationRepository organizationRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
@@ -42,17 +47,17 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
     public void setAuthentication(String token) {
-        User user = null;
+        UserDetails userDetails = null;
         if (token.startsWith("Bearer "))
-            user = getUserFromBearerToken(token);
+            userDetails = getUserFromBearerToken(token);
         else if (token.startsWith("Basic "))
-//            user = getUserFromBasicToken(token);
-        if (user != null&&user.isEnabled()&&user.isAccountNonExpired()&&user.isAccountNonLocked()&&user.isCredentialsNonExpired()) {
+            userDetails = getUserFromBasicToken(token);
+        if (userDetails != null && userDetails.isEnabled() && userDetails.isAccountNonExpired() && userDetails.isAccountNonLocked() && userDetails.isCredentialsNonExpired()) {
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(
-                            user,
+                            userDetails,
                             null,
-                            user.getAuthorities());
+                            userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
     }
@@ -67,17 +72,17 @@ public class JwtFilter extends OncePerRequestFilter {
         return null;
     }
 
-//    public User getUserFromBasicToken(String token) {
-//        token = token.substring("Basic".length()).trim();
-//        byte[] decode = Base64.getDecoder().decode(token);
-//        token = new String(decode, Charset.defaultCharset());
-//        String[] split = token.split(":", 2);
-//        Optional<User> optionalUser = userRepository.findByPhoneNumber(split[0]);
-//        if (optionalUser.isPresent()) {
-//            User user = optionalUser.get();
-//            if (passwordEncoder.matches(split[1], user.getPassword()))
-//                return optionalUser.get();
-//        }
-//        return null;
-//    }
+    public UserDetails getUserFromBasicToken(String token) {
+        token = token.substring("Basic".length()).trim();
+        byte[] decode = Base64.getDecoder().decode(token);
+        token = new String(decode, Charset.defaultCharset());
+        String[] split = token.split(":", 2);
+        Optional<Organization> optionalOrganization = organizationRepository.findByTin(split[0]);
+        if (optionalOrganization.isPresent()) {
+            Organization organization = optionalOrganization.get();
+            if (passwordEncoder.matches(split[1], organization.getPassword()))
+                return organization;
+        }
+        return null;
+    }
 }

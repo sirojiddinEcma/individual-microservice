@@ -1,5 +1,6 @@
 package ai.ecma.appapplicationindividual.entity;
 
+import ai.ecma.appapplicationindividual.entity.enums.ApplicationStatusEnum;
 import ai.ecma.appapplicationindividual.entity.template.AbsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,11 +29,17 @@ public class Application extends AbsEntity {
     private String number;
 
     @Column(nullable = false)
-    private UUID organizationId;
+    private Integer organizationId;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "application")
     private List<Product> products;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Attachment> attachments;
+
+    @Enumerated(EnumType.STRING)
+    private ApplicationStatusEnum applicationStatusEnum = ApplicationStatusEnum.NEW;
+
+    @Column(columnDefinition = "text")
+    private String reasonRejected;
 }

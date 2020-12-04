@@ -8,10 +8,8 @@ import ai.ecma.appapplicationindividual.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * BY SIROJIDDIN on 30.11.2020
@@ -29,4 +27,15 @@ public class ApplicationController {
         ApiResponse apiResponse = applicationService.sendApplication(applicationDto, client);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
+
+
+    @GetMapping
+    public HttpEntity<?> getApplications(@RequestParam(value = "page", defaultValue = "0") int page,
+                                         @RequestParam(value = "size", defaultValue = "10") int size,
+                                         @CurrentUser UserDetails user) {
+        ApiResponse apiResponse = applicationService.getApplications(page, size, user);
+        return ResponseEntity.ok(apiResponse);
+    }
+
+
 }

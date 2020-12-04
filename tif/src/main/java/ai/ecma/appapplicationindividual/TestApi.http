@@ -1,18 +1,56 @@
+POST http://localhost:8090/api/organization
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZjA1YjE0Ni0xNzgzLTQzY2ItYTU4Ni1kYzc4MmYyNTdiMjciLCJpYXQiOjE2MDcwODcxMzAsImV4cCI6MTYwNzY5MTkzMH0.yo3X0rb2Sqc3cm2DfSqKBlAAGPszYjrgMr0ni1YpEH4I5HGQfBw_t1cvDMk0ivv_YU2vCWCvGRXoi6_z4X1K0w
+
+{
+"name": "Karantin",
+"tin": "123456788",
+  "password":"123456788"}
+
+###
+POST http://localhost:8090/api/application
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZjA1YjE0Ni0xNzgzLTQzY2ItYTU4Ni1kYzc4MmYyNTdiMjciLCJpYXQiOjE2MDcwODcxMzAsImV4cCI6MTYwNzY5MTkzMH0.yo3X0rb2Sqc3cm2DfSqKBlAAGPszYjrgMr0ni1YpEH4I5HGQfBw_t1cvDMk0ivv_YU2vCWCvGRXoi6_z4X1K0w
+
+{
+  "organizationId": "1",
+  "productDtoList": [
+    {
+      "name": "Anor",
+      "code": "001",
+      "measurementId": "1",
+      "amount": "1000"
+    },
+    {
+      "name": "Olma",
+      "code": "002",
+      "measurementId": "2",
+      "amount": "8000"
+    }
+  ],
+  "attachmentIds": [
+
+  ]
+}
+
+###
 POST http://localhost:8090/api/auth/login
 Content-Type: application/json
 Accept-Language: uz
 
 {
-  "firstName":"Sirojiddin",
-  "lastName":"Saidov",
-  "tin":"123456788",
-  "login":"1234567899",
-  "companyName":"ECMA",
-  "phoneNumber":"+998996791137",
-  "email":"sirojiddiecma2@gmail.com",
-  "fax":"8989",
-  "personTypeId":"2"
+  "firstName": "Tadbirkor",
+  "lastName": "Tadbirkor",
+  "tin": "987654321",
+  "login": "00000001",
+  "companyName": "ECMA",
+  "phoneNumber": "+998996791136",
+  "email": "sirojiddiecma@gmail.com",
+  "fax": "8989",
+  "personTypeId": "2"
 }
 
 ###
+
+
 
