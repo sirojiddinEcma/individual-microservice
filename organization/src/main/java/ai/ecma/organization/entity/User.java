@@ -47,6 +47,8 @@ public class User extends AbsEntity implements UserDetails {
 
     private String fax;
 
+    private String password;
+
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
@@ -58,23 +60,19 @@ public class User extends AbsEntity implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @ManyToMany
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    private Set<Permission> permissions;
+//    @ManyToMany
+//    @JoinTable(name = "user_permission",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "permission_id"))
+//    private Set<Permission> permissions=new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>(roles);
-        grantedAuthorities.addAll(permissions);
+//        grantedAuthorities.addAll(permissions);
         return grantedAuthorities;
     }
 
-    @Override
-    public String getPassword() {
-        return keySerialNumber;
-    }
 
     @Override
     public String getUsername() {
@@ -99,5 +97,17 @@ public class User extends AbsEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public User(String firstName, String lastName, String tin, String keySerialNumber, Organization organization, String phoneNumber, String email, String password, Set<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.tin = tin;
+        this.keySerialNumber = keySerialNumber;
+        this.organization = organization;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 }

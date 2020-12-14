@@ -32,8 +32,9 @@ public class ApplicationController {
     @GetMapping
     public HttpEntity<?> getApplications(@RequestParam(value = "page", defaultValue = "0") int page,
                                          @RequestParam(value = "size", defaultValue = "10") int size,
+                                         @RequestParam(value = "orgId", defaultValue = "0") Integer orgId,
                                          @CurrentUser UserDetails user) {
-        ApiResponse apiResponse = applicationService.getApplications(page, size, user);
+        ApiResponse apiResponse = applicationService.getApplications(page, size, user,orgId);
         return ResponseEntity.ok(apiResponse);
     }
 

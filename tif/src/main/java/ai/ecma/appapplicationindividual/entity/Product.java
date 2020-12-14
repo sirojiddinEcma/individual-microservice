@@ -1,6 +1,7 @@
 package ai.ecma.appapplicationindividual.entity;
 
 import ai.ecma.appapplicationindividual.entity.template.AbsEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,6 +33,7 @@ public class Product extends AbsEntity {
 
     private Double amount;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Application application;
 }

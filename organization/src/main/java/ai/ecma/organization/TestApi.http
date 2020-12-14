@@ -1,5 +1,13 @@
-GET http://localhost:8090/api/application
+POST http://localhost:8080/api/auth/login
 Content-Type: application/json
+
+{
+"login": "1234567890"}
+
+###
+GET http://localhost:8080/api/application
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxZTBjZjI4NS1iYjE5LTQyMDAtOTk4MS02NDg1OWMxNGI2NDciLCJpYXQiOjE2MDc5NTA3MTAsImV4cCI6MTYwODU1NTUxMH0.91VcoCBM4Zxytbc1NsurxGahT0wt5RgP369XGw4UJj5QFDmjmps88qqPcwEwwQj4xUPwDcPwFL32uAilL0Dw5g
 
 {
   "nameUz":"KG",
@@ -20,5 +28,7 @@ Accept: application/json
 "address":"Beruniy",
 "accountNumber":"123456789",
 }
+
+
 
 ###

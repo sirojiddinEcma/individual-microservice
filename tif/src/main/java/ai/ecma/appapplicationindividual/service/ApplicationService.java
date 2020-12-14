@@ -10,6 +10,10 @@ import ai.ecma.appapplicationindividual.payload.ProductDto;
 import ai.ecma.appapplicationindividual.repository.ApplicationRepository;
 import ai.ecma.appapplicationindividual.repository.AttachmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,7 +84,9 @@ public class ApplicationService {
         );
     }
 
-    public ApiResponse getApplications(int page, int size, UserDetails user) {
-        return new ApiResponse("Javob keldi tif dan", true, "Qalyay ekan object?");
+    public ApiResponse getApplications(int page, int size, UserDetails user, Integer orgId) {
+        Pageable pageable=PageRequest.of(page, size);
+        Page<Application> applicationPage = applicationRepository.findAllByOrganizationId(orgId, pageable);
+        return new ApiResponse("Javob keldi tif dan", true, applicationPage.getContent());
     }
 }
